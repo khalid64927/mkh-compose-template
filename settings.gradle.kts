@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmp-tes-app"
+rootProject.name = "mkh-compose-template"
 include(":androidApp")
 include(":shared")

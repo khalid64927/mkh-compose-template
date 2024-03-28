@@ -161,37 +161,37 @@ multiplatformResources {
 
 buildkonfig {
     packageName = "com.multiplatform.app"
-    val prepaidUatUrl: String = gradleLocalProperties(rootDir).getProperty("prepaidUatUrl")
-    val prepaidProductionUrl: String = gradleLocalProperties(rootDir).getProperty("prepaidProductionUrl")
+    val paymentUatUrl: String = gradleLocalProperties(rootDir).getProperty("paymentUatUrl")
+    val paymentProductionUrl: String = gradleLocalProperties(rootDir).getProperty("paymentProductionUrl")
     // clientId and clientSecret
-    val prepaidUatClientId: String = gradleLocalProperties(rootDir).getProperty("prepaidUatClientId")
-    val prepaidUatClientSecret: String = gradleLocalProperties(rootDir).getProperty("prepaidUatClientSecret")
-    val prepaidProdClientId: String = gradleLocalProperties(rootDir).getProperty("prepaidProdClientId")
-    val prepaidProdClientSecret: String = gradleLocalProperties(rootDir).getProperty("prepaidProdClientSecret")
+    val paymentUatClientId: String = gradleLocalProperties(rootDir).getProperty("paymentUatClientId")
+    val paymentUatClientSecret: String = gradleLocalProperties(rootDir).getProperty("paymentUatClientSecret")
+    val paymentProdClientId: String = gradleLocalProperties(rootDir).getProperty("paymentProdClientId")
+    val paymentProdClientSecret: String = gradleLocalProperties(rootDir).getProperty("paymentProdClientSecret")
 
 
     defaultConfigs {
         // set values for default
         buildConfigField(STRING, "FLAVOR", "uat")
-        buildConfigField(STRING, "PREPAID_URL", prepaidUatUrl)
-        buildConfigField(STRING, "PREPAID_CLIENT_ID", prepaidUatClientId)
-        buildConfigField(STRING, "PREPAID_CLIENT_SECRET", prepaidUatClientSecret)
+        buildConfigField(STRING, "PREPAID_URL", paymentUatUrl)
+        buildConfigField(STRING, "PREPAID_CLIENT_ID", paymentUatClientId)
+        buildConfigField(STRING, "PREPAID_CLIENT_SECRET", paymentUatClientSecret)
 
     }
 
     defaultConfigs("uat") {
         // set values for UAT FLAVOR
         buildConfigField(STRING, "FLAVOR", "uat")
-        buildConfigField(STRING, "PREPAID_URL", prepaidUatUrl)
-        buildConfigField(STRING, "PREPAID_CLIENT_ID", prepaidUatClientId)
-        buildConfigField(STRING, "PREPAID_CLIENT_SECRET", prepaidUatClientSecret)
+        buildConfigField(STRING, "PREPAID_URL", paymentUatUrl)
+        buildConfigField(STRING, "PREPAID_CLIENT_ID", paymentUatClientId)
+        buildConfigField(STRING, "PREPAID_CLIENT_SECRET", paymentUatClientSecret)
     }
 
     defaultConfigs("production") {
         // set values for Production FLAVOR
         buildConfigField(STRING, "FLAVOR", "production")
-        buildConfigField(STRING, "PREPAID_URL", prepaidProductionUrl)
-        buildConfigField(STRING, "PREPAID_CLIENT_ID", prepaidProdClientId)
-        buildConfigField(STRING, "PREPAID_CLIENT_SECRET", prepaidProdClientSecret)
+        buildConfigField(STRING, "PREPAID_URL", paymentProductionUrl)
+        buildConfigField(STRING, "PREPAID_CLIENT_ID", paymentProdClientId)
+        buildConfigField(STRING, "PREPAID_CLIENT_SECRET", paymentProdClientSecret)
     }
 }
