@@ -28,7 +28,7 @@ kermit = "2.0.1"
 kotest = "5.5.4"
 turbine = "0.13.0"
 material3 = "1.1.2"
-kase64 = "1.1.0"
+kase64 = "1.1.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose-version" }
