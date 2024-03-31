@@ -36,7 +36,7 @@ androidx-junit = "1.1.5"
 espresso-core = "3.5.1"
 material = "1.11.0"
 google-wallet = "19.3.0"
-google-pay-button = "0.1.1"
+google-pay-button = "0.1.4"
 kotlinx-coroutines-play-services = "1.7.3"
 lifecycle-runtime-compose = "2.7.0"
 
