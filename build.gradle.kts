@@ -16,6 +16,7 @@ plugins {
     alias(libs.plugins.com.android.application.plugin) apply false
     alias(libs.plugins.com.android.library.plugin) apply false
     alias(libs.plugins.org.jetbrains.compose.plugin) apply false
+    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
 }
 
 tasks.register("clean", Delete::class) {

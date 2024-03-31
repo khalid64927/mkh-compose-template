@@ -17,7 +17,8 @@ plugins {
 }
 
 kotlin {
-    android {
+
+    androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
@@ -140,6 +141,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.7"
     }
+
 }
 
 sqldelight {

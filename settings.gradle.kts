@@ -18,3 +18,4 @@ dependencyResolutionManagement {
 rootProject.name = "mkh-compose-template"
 include(":androidApp")
 include(":shared")
+include(":apple-google-payments")

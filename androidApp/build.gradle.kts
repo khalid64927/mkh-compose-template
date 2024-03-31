@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.multiplatform.app.android"
+    namespace = "com.multiplatform.app"
     compileSdk = 34
     defaultConfig {
         applicationId = "com.multiplatform.app"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.material3)
     coreLibraryDesugaring (libs.desugar.jdk.libs)
     implementation(project(":shared"))
+    implementation(project(":apple-google-payments"))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.activity.compose)
     implementation(libs.org.jetbrains.kotlinx.coroutines.android)
@@ -54,4 +55,6 @@ dependencies {
     implementation(libs.io.insert.koin.android)
     implementation(compose.preview)
     debugImplementation(libs.androidx.ui.tooling)
+
+
 }
