@@ -1,6 +1,6 @@
-package com.multiplatform.app.util
+package com.multiplatform.app.platform
 
-expect class PlatformExpects() {
+interface PlatformApis {
     fun setStatusBarColor()
     fun getModelName(): String
     fun getOSVersion(): String

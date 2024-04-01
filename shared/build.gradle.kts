@@ -77,6 +77,7 @@ kotlin {
 
                 api(libs.moe.tlaster.precompose)
                 implementation(libs.touchlab.kermit)
+                implementation(project(":apple-google-payments"))
             }
         }
         val commonTest by getting {
