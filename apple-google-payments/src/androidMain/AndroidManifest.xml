@@ -7,7 +7,7 @@
     <application
         android:allowBackup="false">
         <activity
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:name=".googlepay.demo.CheckoutActivity"
             android:exported="true">
             <intent-filter>

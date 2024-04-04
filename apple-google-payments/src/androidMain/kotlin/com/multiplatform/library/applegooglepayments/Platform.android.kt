@@ -1,27 +1,20 @@
 package com.multiplatform.library.applegooglepayments
 
-class AndroidPlatform : Platform {
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+
+class AndroidPlatform() : Platform {
     override val name: String = "Android ${android.os.Build.VERSION.SDK_INT}"
 
-    override fun println(message: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun fetchCanUseGooglePay(): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getLoadPaymentDataTask(): Result<String> {
-        TODO("Not yet implemented")
-    }
-
-    override fun canMakePayments(): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun makeApplePayment() {
-        TODO("Not yet implemented")
-    }
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
+actual interface PaymentInterface {
+    actual suspend fun canMakePayments(): Boolean
+    actual suspend fun makePayments(
+        amount: String,
+        callback: (result: Result<String>) -> Unit
+    )
+
+    fun bind(lifecycle: Lifecycle, fragmentManager: FragmentManager)
+}

@@ -1,7 +1,6 @@
 package com.multiplatform.library.applegooglepayments
 
 data class GooglePayConfig(
-    val amount: String,
     /**
      * sample : example
      * */
@@ -21,18 +20,26 @@ data class GooglePayConfig(
     val currencyCode: String,
 
     val shippingDetails: ShippingDetails?,
+
     /**
      * sample : listOf( "AMEX", "DISCOVER", "JCB", "MASTERCARD", "VISA")
      * */
     val allowedCards: List<String>,
+
+    /**
+     * sample :  listOf("PAN_ONLY", "CRYPTOGRAM_3DS")
+     * */
     val supportedMethods: List<SupportedMethods>,
+    val paymentsEnvironment: Int = 3 // WalletConstants.ENVIRONMENT_TEST
 )
 
 data class ShippingDetails(
     /**
      * sample: listOf("US", "GB", "SG")
      * **/
-    val shippingCountryCodeList: List<String>)
+    val shippingCountryCodeList: List<String>,
+    val phoneNumberRequired: Boolean)
+
 
 enum class SupportedMethods {
     PAN_ONLY, CRYPTOGRAM_3DS

@@ -1,22 +1,16 @@
 package com.multiplatform.library.applegooglepayments
 
-interface Platform: GooglePayModel, ApplePayModel {
+interface Platform {
     val name: String
-    fun println(message: String)
-
 }
 
 expect fun getPlatform(): Platform
 
-interface GooglePayModel {
-    suspend fun fetchCanUseGooglePay(): Boolean
-    suspend fun getLoadPaymentDataTask(): Result<String>
+
+expect interface PaymentInterface {
+    suspend fun canMakePayments(): Boolean
+    suspend fun makePayments(amount: String, callback: (result: Result<String>) -> Unit)
 }
 
-interface ApplePayModel {
-    fun canMakePayments(): Boolean
-    // TODO
-    fun makeApplePayment()
-}
 
 

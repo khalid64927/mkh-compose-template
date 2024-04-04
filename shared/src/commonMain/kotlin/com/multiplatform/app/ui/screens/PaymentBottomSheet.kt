@@ -1,6 +1,5 @@
 package com.multiplatform.app.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,8 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.multiplatform.app.ui.components.bottomsheet.TransparentBackground
-import com.multiplatform.library.applegooglepayments.Platform
-import com.multiplatform.library.applegooglepayments.getPlatform
 import kotlinx.coroutines.launch
 
     @OptIn(ExperimentalMaterial3Api::class)

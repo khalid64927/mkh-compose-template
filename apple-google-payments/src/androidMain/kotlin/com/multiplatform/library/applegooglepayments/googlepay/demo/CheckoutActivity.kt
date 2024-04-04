@@ -1,5 +1,6 @@
 package com.multiplatform.library.applegooglepayments.googlepay.demo
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,16 +11,40 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.wallet.AutoResolveHelper
 import com.google.android.gms.wallet.PaymentData
 import com.multiplatform.library.applegooglepayments.R
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.common.api.ResolvableApiException
+import com.multiplatform.library.applegooglepayments.onFailure
+import com.multiplatform.library.applegooglepayments.onSuccess
 
 
-class CheckoutActivity : ComponentActivity() {
+class CheckoutActivity : AppCompatActivity() {
 
     private val googlePayRequestCode = 1001
+
+    // Handle potential conflict from calling loadPaymentData.
+    private val resolvePaymentForResult = registerForActivityResult(StartIntentSenderForResult()) {
+            result: ActivityResult ->
+        when (result.resultCode) {
+            RESULT_OK ->
+                result.data?.let { intent ->
+                    //PaymentData.getFromIntent(intent)?.let(::handlePaymentSuccess)
+                }
+
+            RESULT_CANCELED -> {
+                // The user cancelled the payment attempt
+            }
+        }
+    }
 
     private val model: CheckoutViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        model.googlePayModel.bind(lifecycle, fragmentManager = supportFragmentManager)
         setContent {
             val payState: PaymentUiState by model.paymentUiState.collectAsStateWithLifecycle()
             ProductScreen(
@@ -29,8 +54,20 @@ class CheckoutActivity : ComponentActivity() {
                 image = R.drawable.ts_10_11019a,
                 payUiState = payState,
                 onGooglePayButtonClick = {
-                    AutoResolveHelper.resolveTask(
-                        model.getLoadPaymentDataTask(), this, googlePayRequestCode)
+                    model.getLoadPaymentDataTask("100") { exception ->
+                        exception.onSuccess {
+                            println("CA : onSuccess :$it")
+                        }.onFailure {
+                            when(it){
+                                is ResolvableApiException -> {
+                                    println("CA : ResolvableApiException :${it.message}")
+                                    resolvePaymentForResult.launch(
+                                    IntentSenderRequest.Builder(it.resolution).build())
+
+                                }
+                            }
+                        }
+                    }
                 },
             )
         }

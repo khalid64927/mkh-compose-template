@@ -7,10 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.wallet.IsReadyToPayRequest
 import com.google.android.gms.wallet.PaymentData
 import com.google.android.gms.wallet.PaymentDataRequest
 import com.google.android.gms.wallet.PaymentsClient
+import com.multiplatform.library.applegooglepayments.GooglePayConfig
+import com.multiplatform.library.applegooglepayments.PaymentInterface
+import com.multiplatform.library.applegooglepayments.Result
+import com.multiplatform.library.applegooglepayments.SupportedMethods
+import com.multiplatform.library.applegooglepayments.googlepay.GooglePayModelImpl
+import com.multiplatform.library.applegooglepayments.googlepay.utils.GooglePaymentsUtils
 import com.multiplatform.library.applegooglepayments.googlepay.utils.PaymentsUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,8 +31,18 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     private val _paymentUiState: MutableStateFlow<PaymentUiState> = MutableStateFlow(PaymentUiState.NotStarted)
     val paymentUiState: StateFlow<PaymentUiState> = _paymentUiState.asStateFlow()
 
-    // A client for interacting with the Google Pay API.
-    private val paymentsClient: PaymentsClient = PaymentsUtil.createPaymentsClient(application)
+    private val googlePayConfig = GooglePayConfig(
+        gateway = "example",
+        gatewayMerchantId = "exampleGatewayMerchantId",
+        merchantName = "MSTA",
+        countryCode = "SG",
+        currencyCode = "SDG",
+        shippingDetails = null,
+        allowedCards = listOf("AMEX", "VISA", "MASTER"),
+        supportedMethods = listOf(SupportedMethods.PAN_ONLY, SupportedMethods.CRYPTOGRAM_3DS)
+    )
+
+    val googlePayModel: PaymentInterface = GooglePayModelImpl(application, googlePayConfig)
 
     init {
         viewModelScope.launch {
@@ -40,12 +55,9 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
      * a Google Pay payment button.
     ) */
     private suspend fun fetchCanUseGooglePay() {
-        val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest()
-        val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString())
-        val task : Task<Boolean> = paymentsClient.isReadyToPay(request)
-
+        val result = googlePayModel.canMakePayments()
         val newUiState: PaymentUiState = try {
-            if (task.await()) {
+            if (result) {
                 PaymentUiState.Available
             } else {
                 PaymentUiState.Error(CommonStatusCodes.ERROR)
@@ -57,17 +69,25 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
         _paymentUiState.update { newUiState }
     }
 
+    fun getLoadPaymentDataTask(amount: String, callback: (result : Result<String>) -> Unit) {
+        viewModelScope.launch {
+
+            googlePayModel.makePayments(amount,  callback)
+        }
+
+    }
+
     /**
      * Creates a [Task] that starts the payment process with the transaction details included.
      *
      * @return a [Task] with the payment information.
      * @see [PaymentDataRequest](https://developers.google.com/android/reference/com/google/android/gms/wallet/PaymentsClient#loadPaymentData(com.google.android.gms.wallet.PaymentDataRequest)
     ) */
-    fun getLoadPaymentDataTask(): Task<PaymentData> {
-        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(priceCemts = 100L)
-        val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
-        return paymentsClient.loadPaymentData(request)
-    }
+//    fun getLoadPaymentDataTask(): Task<PaymentData> {
+//        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(priceCents = 100L)
+//        val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+//        return paymentsClient.loadPaymentData(request)
+//    }
 
     /**
      * At this stage, the user has already seen a popup informing them an error occurred. Normally,
