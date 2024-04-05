@@ -5,6 +5,8 @@ import com.multiplatform.app.data.local.datastore.DataStoreProvider
 import com.multiplatform.app.domain.location.IosLocationService
 import com.multiplatform.app.domain.location.LocationService
 import com.multiplatform.app.database.AppDatabase
+import com.multiplatform.app.platform.PlatformSingleton
+import com.multiplatform.library.applegooglepayments.applepay.ApplePayModelImpl
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import dev.icerock.moko.permissions.ios.PermissionsController
@@ -14,6 +16,8 @@ import org.koin.dsl.module
 val appModule = module {
     single<DataStoreProvider> { DataStoreProviderImpl() }
     single { getEngine() }
+    baseLogger.d("iOS appModule")
+    PlatformSingleton.setPaymentInterface(ApplePayModelImpl())
     single<SqlDriver> {
         NativeSqliteDriver(AppDatabase.Schema, "location.db")
     }

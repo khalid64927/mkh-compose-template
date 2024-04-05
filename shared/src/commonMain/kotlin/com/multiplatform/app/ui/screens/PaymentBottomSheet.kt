@@ -24,7 +24,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.multiplatform.app.di.baseLogger
+import com.multiplatform.app.platform.PlatformSingleton
 import com.multiplatform.app.ui.components.bottomsheet.TransparentBackground
+import com.multiplatform.library.applegooglepayments.onFailure
+import com.multiplatform.library.applegooglepayments.onSuccess
+import io.ktor.utils.io.printStack
 import kotlinx.coroutines.launch
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -69,11 +74,24 @@ import kotlinx.coroutines.launch
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(onClick = {
-                                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                    if (!sheetState.isVisible) {
-                                        showBottomSheet = false
+                                scope.launch {
+                                    PlatformSingleton.getPaymentInterface()?.makePayments("100") {
+                                        it.onSuccess {
+                                            baseLogger.d("success $it")
+
+                                        }.onFailure {
+                                            it.printStack()
+                                            baseLogger.d("onFailure ${it.message}")
+                                        }
                                     }
-                                }
+
+                                    }
+                                    //sheetState.hide() }.invokeOnCompletion {
+
+//                                    if (!sheetState.isVisible) {
+//                                        showBottomSheet = false
+//                                    }
+                                //}
                             }) {
                                 Text("Hide bottom sheet")
                             }

@@ -10,7 +10,7 @@ class IOSPlatform: Platform {
 actual fun getPlatform(): Platform = IOSPlatform()
 actual interface PaymentInterface {
     actual suspend fun canMakePayments(): Boolean
-    actual fun makePayments(
+    actual suspend fun makePayments(
         amount: String,
         callback: (result: Result<String>) -> Unit
     )

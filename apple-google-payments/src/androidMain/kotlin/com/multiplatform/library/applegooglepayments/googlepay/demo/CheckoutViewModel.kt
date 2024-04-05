@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.wallet.PaymentData
 import com.google.android.gms.wallet.PaymentDataRequest
 import com.google.android.gms.wallet.PaymentsClient
+import com.google.android.gms.wallet.WalletConstants
 import com.multiplatform.library.applegooglepayments.GooglePayConfig
 import com.multiplatform.library.applegooglepayments.PaymentInterface
 import com.multiplatform.library.applegooglepayments.Result
@@ -38,7 +39,8 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
         countryCode = "SG",
         currencyCode = "SDG",
         shippingDetails = null,
-        allowedCards = listOf("AMEX", "VISA", "MASTER"),
+        paymentsEnvironment = WalletConstants.ENVIRONMENT_TEST,
+        allowedCards = listOf("AMEX","DISCOVER","JCB","MASTERCARD","VISA"),
         supportedMethods = listOf(SupportedMethods.PAN_ONLY, SupportedMethods.CRYPTOGRAM_3DS)
     )
 

@@ -10,7 +10,6 @@ import platform.UIKit.*
 import platform.darwin.NSObject
 
 data class ApplePayConfig(
-    val amount: String,
     val productName: String,
     val merchantIdentifier: String,
     val countryCode: String,
@@ -25,7 +24,7 @@ class ApplePayModelImpl : PaymentInterface {
         return PKPaymentAuthorizationViewController.canMakePayments()
     }
 
-    override fun makePayments(amount: String, callback: (result: Result<String>) -> Unit) {
+    override suspend fun makePayments(amount: String, callback: (result: Result<String>) -> Unit) {
         val paymentRequest = PKPaymentRequest()
         paymentRequest.merchantIdentifier = "YOUR_MERCHANT_IDENTIFIER"
         paymentRequest.countryCode = "SG"

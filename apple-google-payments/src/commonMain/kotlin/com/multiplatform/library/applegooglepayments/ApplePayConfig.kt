@@ -7,7 +7,6 @@ data class ApplePayConfig(
     val merchantIdentifier: String,
     val countryCode: String,
     val currencyCode: String,
-    val allowBillingAddress: Boolean,
 
     /**
      * ios supported values : listOf( "AMEX", "MASTERCARD", "VISA")

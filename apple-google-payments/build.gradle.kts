@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.multiplatform.plugin)
     alias(libs.plugins.com.android.library.plugin)
-    alias(libs.plugins.org.jetbrains.compose.plugin)
     alias(libs.plugins.org.jetbrains.kotlin.serialization.plugin)
     kotlin("native.cocoapods")
     id("maven-publish")
@@ -34,14 +33,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.animation)
                 implementation(libs.org.jetbrains.kotlinx.coroutines.core)
-                implementation(libs.touchlab.kermit)
-                implementation(libs.io.insert.koin.core)
             }
         }
         val commonTest by getting {

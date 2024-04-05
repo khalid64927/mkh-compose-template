@@ -1,6 +1,23 @@
 package com.multiplatform.library.applegooglepayments
 
+import androidx.collection.emptyFloatList
 
+
+data class PaymentConfig(
+    /**
+     * The merchant’s two-letter ISO 3166 country code.
+     * */
+    val countryCode: String,
+    /**
+     * The three-letter ISO 4217 currency code that determines the
+     * currency the payment request uses.
+     * */
+    val currencyCode: String,
+
+    val allowBillingAddress: Boolean = false,
+
+    val allowedCards: List<AllowedCards>
+)
 
 enum class AllowedCards {
     VISA,
@@ -10,12 +27,9 @@ enum class AllowedCards {
     DISCOVER
 }
 
-enum class CountryCode {
-    SG, US, GB,
-}
 
-enum class CurrencyCode {
-    SGD, USD, GBP
+fun AllowedCards.toAppleCards() {
+
 }
 
 enum class SupportedCardMethods {
