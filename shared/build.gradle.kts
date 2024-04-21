@@ -152,7 +152,7 @@ sqldelight {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.3")
     implementation(libs.androidx.core)
     testImplementation("junit:junit:4.12")
 }
