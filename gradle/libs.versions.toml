@@ -90,7 +90,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" , version.ref = "kotlin-version"}
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 kase64-peilicke = { group = "de.peilicke.sascha", name = "kase64", version.ref = "kase64" }
-com-benasher44-uuid = { group = "com.benasher44", name = "uuid", version = "0.8.1" }
+com-benasher44-uuid = { group = "com.benasher44", name = "uuid", version = "0.8.4" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
